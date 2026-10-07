@@ -33,12 +33,6 @@ class EchoJUnit:
     assertEquals("hello hello", (new DoubleEcho).echo("hello"))
 
   @Test
-  def testSimpleUsingList: Unit =
-    val echos = List(new SimpleEcho)
-    val result = echos(1).echo("")
-    assertEquals("", result)
-
-  @Test
   def testSimpleAlsoUsingList: Unit =
     val echos = List(new SimpleEcho)
     try
