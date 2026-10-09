@@ -1,0 +1,158 @@
+================================================================================
+COMP 371 Individual Project: EchoTest — Scala and TDD Grading Report
+================================================================================
+
+Student: Rodrigo Rejas
+GitHub Username: rodrigorejas
+Repository URL: https://github.com/rodrigorejas/echotest-scala.git
+Local Workspace: /Users/sanjrao/project0b-grading/Rodrigo
+Head Commit: ec2a5dfc625e63075f5687d215e02db820873071
+Branch: main (up to date with origin/main)
+
+--------------------------------------------------------------------------------
+RUBRIC EVALUATION & SCORE BREAKDOWN
+--------------------------------------------------------------------------------
+
+1. GitHub submission: 0.5 / 0.5
+   - Evidence:
+     * Git remote 'origin' is set to https://github.com/rodrigorejas/echotest-scala.git.
+     * Commit history is present and pushed to origin/main.
+     * Repository was cloned and accessible locally.
+   - Unverified items / Limitations:
+     * Sakai submission cannot be verified from repository contents alone.
+     * Collaborator invitations cannot be verified without GitHub API or access to repository collaborator settings.
+
+2. Project structure: 0.5 / 0.5
+   - Evidence:
+     * Standard sbt/Scala project structure is preserved:
+       - build.sbt, scala.sbt, project/build.properties, project/plugins.sbt
+       - src/main/scala/main/ (Echo.scala, Interactive.scala, Main.scala)
+       - src/main/scala/impl/ (DoubleEcho.scala, SimpleEcho.scala)
+       - src/test/scala/impl/ (EchoJUnit.scala, EchoTest.scala, EchoCheck.scala, EchoSpec.scala)
+     * No files moved or deleted outside allowable test removals.
+     * Configuration files (.scalafmt.conf, .gitignore, CI workflows) remain intact.
+
+3. Continual work: 0.5 / 0.5
+   - Evidence:
+     * 4 fine-grained, meaningful commits by Rodrigo Rejas spanning Oct 7, 2026:
+       - 9073fc7 (2026-10-07 16:38:52 UTC): "Fix spacing in DoubleEcho"
+       - d05883b (2026-10-07 20:37:20 UTC): "Removed the first test in the file"
+       - eb4aa9d (2026-10-07 21:00:03 UTC): "Test called testUsingSimpleList was removed"
+       - ec2a5df (2026-10-07 22:01:38 UTC): "Last fix happened src/main to make all pass succesfully"
+     * Each commit addresses an isolated step in development with clear intent.
+
+4. AI interaction records: 0.0 / 0.5
+   - Evidence:
+     * Checked repository root and subdirectories: no `doc/` directory exists.
+     * Checked git history: `git log --all --full-history -- doc` returned no commits.
+     * No Markdown (.md) or JSON (.json) AI interaction logs were provided.
+   - Deduction:
+     * -0.5 points. Requirement specifies providing Markdown or JSON exports of AI interactions under `doc/`.
+
+5. Two erroneous test methods: 0.5 / 0.5
+   - Evidence:
+     * Baseline comparison against upstream/main:
+       - In src/test/scala/impl/EchoJUnit.scala, erroneous method `testSimpleUsingList` (which failed due to IndexOutOfBoundsException on index 1 of a 1-element list) was removed in commit eb4aa9d.
+       - In src/test/scala/impl/EchoTest.scala, erroneous test "A simple echo inside a list should still echo an empty argument" (which failed due to IndexOutOfBoundsException on index 1 of a 1-element list) was removed in commit d05883b.
+     * Both erroneous test methods were correctly identified and removed as permitted by the assignment specifications.
+
+6. Other tests pass: 0.5 / 0.5
+   - Evidence:
+     * Checked diff of `src/test`: Only the two permitted erroneous test methods were removed; no other tests or test files were modified.
+     * Required behavior implemented in `src/main`:
+       - DoubleEcho spacing bug fixed to return single-space duplication (`msg + " " + msg`).
+       - Main.scala appropriately handles formatting.
+     * Test verification command `sbt test` executed successfully:
+       - 16 total tests passed, 0 failures, 0 errors:
+         * EchoTest (ScalaTest AnyFunSuite): 5 passed
+         * EchoCheck (ScalaTest + ScalaCheck Checkers): 2 passed
+         * EchoSpec (ScalaCheck Properties): 2 passed (100 checks each)
+         * EchoJUnit (JUnit Jupiter): 7 passed
+       - `sbt coverage test coverageReport` statement coverage: 78.72%, branch coverage: 60.00%.
+
+--------------------------------------------------------------------------------
+COMMANDS RUN & ACTUAL RESULTS
+--------------------------------------------------------------------------------
+
+1. `git remote -v`
+   origin   https://github.com/rodrigorejas/echotest-scala.git (fetch)
+   origin   https://github.com/rodrigorejas/echotest-scala.git (push)
+   upstream https://github.com/lucproglangcourse/echotest-scala.git (fetch)
+   upstream https://github.com/lucproglangcourse/echotest-scala.git (push)
+   Result: Success (exit code 0)
+
+2. `git log upstream/main..HEAD --stat`
+   ec2a5df Last fix happened src/main to make all pass succesfully (Main.scala | 2 +-)
+   eb4aa9d Test called testUsingSimpleList was removed (EchoJUnit.scala | 6 ------)
+   d05883b Removed the first test in the file (EchoTest.scala | 5 -----)
+   9073fc7 Fix spacing in DoubleEcho (DoubleEcho.scala | 2 +-)
+   Result: Success (exit code 0)
+
+3. `git diff upstream/main -- src/test`
+   Shows deletions of only:
+   - `testSimpleUsingList` in src/test/scala/impl/EchoJUnit.scala
+   - "A simple echo inside a list should still echo an empty argument" in src/test/scala/impl/EchoTest.scala
+   No other tests or files in `src/test` modified.
+   Result: Success (exit code 0)
+
+4. `find . -type f \( -name "*.md" -o -name "*.json" -o -name "*.txt" \)`
+   Found only: ./README.md, ./.vscode/settings.json
+   No files or directories under `doc/`.
+   Result: Success (exit code 0)
+
+5. `sbt test`
+   Result: Exit code 0
+   [info] EchoTest:
+   [info] - A simple echo should echo an empty argument
+   [info] - A simple echo should echo a nonempty argument
+   [info] - A double echo should echo twice an empty argument
+   [info] + Echo.simpleEcho: OK, passed 100 tests.
+   [info] - A double echo should echo twice a nonempty argument
+   [info] - A simple echo inside a list used wrong should throw an index-out-of-bounds exception
+   [info] EchoCheck:
+   [info] - A simple echo should echo its argument
+   [info] - A double echo should echo twice its argument
+   [info] + Echo.doubleEcho: OK, passed 100 tests.
+   [info] Test run started (JUnit Jupiter)
+   [info] Test edu.luc.cs.cs371.echo.impl.EchoJUnit#testSimpleEmpty() started
+   [info] Test edu.luc.cs.cs371.echo.impl.EchoJUnit#testSimpleAlsoUsingList() started
+   [info] Test edu.luc.cs.cs371.echo.impl.EchoJUnit#testDoubleNonempty() started
+   [info] Test edu.luc.cs.cs371.echo.impl.EchoJUnit#testInteractiveEndToEnd() started
+   [info] Test edu.luc.cs.cs371.echo.impl.EchoJUnit#testMainEndToEnd() started
+   [info] Test edu.luc.cs.cs371.echo.impl.EchoJUnit#testSimpleNonempty() started
+   [info] Test edu.luc.cs.cs371.echo.impl.EchoJUnit#testDoubleEmpty() started
+   [info] Test run finished: 0 failed, 0 ignored, 7 total, 0.129s
+   [info] ScalaCheck: Passed: Total 2, Failed 0, Errors 0, Passed 2
+   [info] ScalaTest: Total number of tests run: 7; Suites: completed 2; Tests: succeeded 7
+   [info] Passed: Total 16, Failed 0, Errors 0, Passed 16
+   [success] Total time: 12 s
+
+6. `sbt coverage test coverageReport`
+   Result: Exit code 0
+   Statement coverage: 78.72%
+   Branch coverage: 60.00%
+
+--------------------------------------------------------------------------------
+DEDUCTIONS
+--------------------------------------------------------------------------------
+- Category 4 (AI interaction records): -0.5 points
+  Justification: Missing required Markdown or JSON records of AI interactions under `doc/`.
+
+--------------------------------------------------------------------------------
+UNVERIFIED REQUIREMENTS / LIMITATIONS
+--------------------------------------------------------------------------------
+- Sakai submission confirmation: Cannot be verified directly from Git repository without access to Sakai.
+- GitHub collaborator invitation: Cannot be confirmed without GitHub API/settings access.
+
+--------------------------------------------------------------------------------
+FINAL SCORE
+--------------------------------------------------------------------------------
+Total: 2.5 / 3.0
+
+--------------------------------------------------------------------------------
+FEEDBACK
+--------------------------------------------------------------------------------
+Great work on fixing DoubleEcho and identifying the two erroneous list index test methods in both EchoJUnit and EchoTest! Your Git history demonstrates steady, fine-grained progress across several commits, and all 16 unit, property, and end-to-end tests pass cleanly with 100% success.
+To receive full credit next time, be sure to export and include your AI interaction logs (in Markdown or JSON format) under a `doc/` directory as specified in the assignment instructions.
+================================================================================
+
